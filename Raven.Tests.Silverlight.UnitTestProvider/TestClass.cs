@@ -2,10 +2,12 @@
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
+
 namespace Raven.Tests.Silverlight.UnitTestProvider
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 	using System.Reflection;
 	using Microsoft.Silverlight.Testing.Harness;
 	using Microsoft.Silverlight.Testing.UnitTesting.Metadata;
@@ -61,13 +63,15 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 		{
 			if (!testsLoaded)
 			{
-				var test_methods = ReflectionUtility.GetMethodsWithAttribute(
-						type, ProviderAttributes.TestMethod);
-				tests = new List<ITestMethod>(test_methods.Count);
-				foreach (MethodInfo method in test_methods)
-				{
-					tests.Add(new TestMethod(method));
-				}
+				var implicit_methods = from method in type.GetMethods()
+				                       where TestMethod.ReturnTypeForAsyncTaskTest.IsAssignableFrom(method.ReturnType)
+				                       select method;
+
+				tests = implicit_methods
+					.Union(ReflectionUtility.GetMethodsWithAttribute(type, ProviderAttributes.TestMethod))
+					.Select(method => new TestMethod(method) as ITestMethod)
+					.ToList();
+
 				testsLoaded = true;
 			}
 			return tests;

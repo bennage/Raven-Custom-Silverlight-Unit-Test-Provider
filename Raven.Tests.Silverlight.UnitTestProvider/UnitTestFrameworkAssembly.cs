@@ -64,10 +64,18 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 
 		public ICollection<ITestClass> GetTestClasses()
 		{
-			var classes = from type in ReflectionUtility.GetTypesWithAttribute(assembly, ProviderAttributes.TestClass)
-			              select new TestClass(this, type) as ITestClass;
+			var implicit_tests = from type in assembly.GetTypes()
+			                     from method in type.GetMethods()
+			                     where TestMethod.ReturnTypeForAsyncTaskTest.IsAssignableFrom(method.ReturnType)
+			                     group type by type
+			                     into g
+			                     select g.Key;
 
-			return classes.ToList();
+			var all_tests = implicit_tests
+				.Union(ReflectionUtility.GetTypesWithAttribute(assembly, ProviderAttributes.TestClass))
+				.Select(type => new TestClass(this, type) as ITestClass);
+
+			return all_tests.ToList();
 		}
 	}
 }
