@@ -19,7 +19,7 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 
 		static TestMethod()
 		{
-			ReturnTypeForAsyncTaskTest = typeof(IEnumerable<>).MakeGenericType(new[] { typeof(Task) });
+			ReturnTypeForAsyncTaskTest = typeof(IEnumerable<Task>);
 		}
 
         private const string ContextPropertyName = "TestContext";
