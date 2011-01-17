@@ -1,24 +1,55 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Silverlight.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace Raven.Tests.Silverlight.UnitTestProvider.Example
+﻿namespace Raven.Tests.Silverlight.UnitTestProvider.Example
 {
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using Microsoft.Silverlight.Testing;
+	using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 	[TestClass]
-	public class Tests
+	public class Tests : AsynchronousTaskTest
 	{
 		[TestMethod]
-		public void TestMethod1()
+		[Asynchronous]
+		public void OldWay()
 		{
+			var something = SomeTestTask.DoSomethingAsync();
+			EnqueueConditional((() => something.IsCompleted || something.IsFaulted));
+			EnqueueCallback(() =>
+			                	{
+			                		var another = SomeTestTask.DoSomethingAsync();
+			                		EnqueueConditional((() => another.IsCompleted || another.IsFaulted));
+			                		EnqueueCallback(() =>
+			                		                	{
+															EnqueueDelay(100);
+			                		                		Assert.AreEqual(42, another.Result);
+			                		                		EnqueueTestComplete();
+			                		                	});
+			                	});
+		}
+
+		[TestMethod]
+		[Asynchronous]
+		public IEnumerable<Task> NewWay()
+		{
+			var something = SomeTestTask.DoSomethingAsync();
+			yield return something;
+
+			var another = SomeTestTask.DoSomethingAsync();
+			yield return another;
+
+			yield return Delay(100);
+
+			Assert.AreEqual(42, another.Result);
+		}
+	}
+
+	public static class SomeTestTask
+	{
+		public static Task<int> DoSomethingAsync()
+		{
+			var tcs = new TaskCompletionSource<int>();
+			tcs.TrySetResult(42);
+			return tcs.Task;
 		}
 	}
 }
