@@ -15,16 +15,16 @@
 			var something = SomeTestTask.DoSomethingAsync();
 			EnqueueConditional((() => something.IsCompleted || something.IsFaulted));
 			EnqueueCallback(() =>
-			                	{
-			                		var another = SomeTestTask.DoSomethingAsync();
-			                		EnqueueConditional((() => another.IsCompleted || another.IsFaulted));
-			                		EnqueueCallback(() =>
-			                		                	{
-															EnqueueDelay(100);
-			                		                		Assert.AreEqual(42, another.Result);
-			                		                		EnqueueTestComplete();
-			                		                	});
-			                	});
+			{
+			    var another = SomeTestTask.DoSomethingAsync();
+			    EnqueueConditional((() => another.IsCompleted || another.IsFaulted));
+			    EnqueueCallback(() =>
+				{
+					EnqueueDelay(100);
+					Assert.AreEqual(42, another.Result);
+					EnqueueTestComplete();
+				});
+			});
 		}
 
 		[TestMethod]
