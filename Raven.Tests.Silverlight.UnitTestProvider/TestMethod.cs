@@ -2,6 +2,7 @@
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
+
 namespace Raven.Tests.Silverlight.UnitTestProvider
 {
 	using System;
@@ -14,6 +15,13 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 
     public class TestMethod : ITestMethod
     {
+		public static Type ReturnTypeForAsyncTaskTest { get; private set; }
+
+		static TestMethod()
+		{
+			ReturnTypeForAsyncTaskTest = typeof(IEnumerable<>).MakeGenericType(new[] { typeof(Task) });
+		}
+
         private const string ContextPropertyName = "TestContext";
         private const int DefaultPriority = 3;
         private static readonly object[] None = { };
@@ -163,8 +171,7 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 
         public virtual void Invoke(object instance)
         {
-            var type = typeof (IEnumerable<>).MakeGenericType(new[] {typeof(Task)});
-			if(type.IsAssignableFrom(methodInfo.ReturnType))
+			if (ReturnTypeForAsyncTaskTest.IsAssignableFrom(methodInfo.ReturnType) && typeof(AsynchronousTaskTest).IsAssignableFrom(instance.GetType()))
 			{
 			    var executor = instance.GetType().GetMethod("ExecuteTest");
 			    executor.Invoke(instance, new[] {methodInfo});
