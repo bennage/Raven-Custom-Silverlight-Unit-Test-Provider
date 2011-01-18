@@ -5,6 +5,7 @@
 	using System.Reflection;
 	using Microsoft.Silverlight.Testing;
 	using System.Threading.Tasks;
+	using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 	public abstract class AsynchronousTaskTest : SilverlightTest
 	{
@@ -23,15 +24,7 @@
 		private void ExecuteTestStep(IEnumerator<Task> enumerator)
 		{
 			bool moveNextSucceeded = false;
-			try
-			{
-				moveNextSucceeded = enumerator.MoveNext();
-			}
-			catch (Exception ex)
-			{
-				EnqueueTestComplete();
-				return;
-			}
+			moveNextSucceeded = enumerator.MoveNext();
 
 			if (moveNextSucceeded)
 			{
