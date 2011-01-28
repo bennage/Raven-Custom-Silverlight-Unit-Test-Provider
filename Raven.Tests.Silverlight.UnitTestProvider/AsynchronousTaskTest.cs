@@ -23,22 +23,13 @@
 
 		private void ExecuteTestStep(IEnumerator<Task> enumerator)
 		{
-			bool moveNextSucceeded = false;
-			moveNextSucceeded = enumerator.MoveNext();
+			bool moveNextSucceeded = enumerator.MoveNext();
 
 			if (moveNextSucceeded)
 			{
-				try
-				{
-					Task next = enumerator.Current;
-					EnqueueConditional(() => next.IsCompleted || next.IsFaulted);
-					EnqueueCallback(() => ExecuteTestStep(enumerator));
-				}
-				catch (Exception ex)
-				{
-					EnqueueTestComplete();
-					return;
-				}
+				Task next = enumerator.Current;
+				EnqueueConditional(() => next.IsCompleted || next.IsFaulted);
+				EnqueueCallback(() => ExecuteTestStep(enumerator));
 			}
 			else EnqueueTestComplete();
 		}
