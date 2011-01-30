@@ -8,6 +8,7 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Reflection;
+	using Microsoft.Silverlight.Testing;
 	using Microsoft.Silverlight.Testing.Harness;
 	using Microsoft.Silverlight.Testing.UnitTesting.Metadata;
 
@@ -67,6 +68,7 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 			var implicit_tests = from type in assembly.GetTypes()
 			                     from method in type.GetMethods()
 			                     where TestMethod.ReturnTypeForAsyncTaskTest.IsAssignableFrom(method.ReturnType)
+										&& method.GetCustomAttributes(typeof(AsynchronousAttribute),false).Any()
 			                     group type by type
 			                     into g
 			                     select g.Key;
