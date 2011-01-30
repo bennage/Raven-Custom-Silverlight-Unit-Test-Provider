@@ -45,6 +45,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Raven.Tests.Silverlight.UnitTestProvider.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncCtpLibrary_Silverlight">
       <HintPath>..\SharedLibs\AsyncCtpLibrary_Silverlight.dll</HintPath>
@@ -75,6 +81,9 @@
     <Compile Include="UnitTestContext.cs" />
     <Compile Include="UnitTestFrameworkAssembly.cs" />
     <Compile Include="RavenCustomProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Raven.Tests.Silverlight.UnitTestProvider.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
