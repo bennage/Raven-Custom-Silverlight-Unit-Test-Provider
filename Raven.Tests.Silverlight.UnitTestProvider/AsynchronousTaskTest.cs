@@ -21,6 +21,17 @@
 			ExecuteTestStep(enumerator);
 		}
 
+        public void ExecuteTaskTest(MethodInfo test)
+        {
+            var task = (Task)test.Invoke(this, new object[] { });
+            EnqueueConditional(() => task.IsCompleted || task.IsFaulted);
+            EnqueueCallback(() =>
+                                {
+                                    if (task.IsFaulted) throw task.Exception.InnerException;
+                                });
+            EnqueueTestComplete();
+        }
+
 		private void ExecuteTestStep(IEnumerator<Task> enumerator)
 		{
 			bool moveNextSucceeded = enumerator.MoveNext();

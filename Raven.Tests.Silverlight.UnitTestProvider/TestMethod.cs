@@ -171,6 +171,12 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 
         public virtual void Invoke(object instance)
         {
+            if (methodInfo.ReturnType == typeof(Task) && typeof(AsynchronousTaskTest).IsAssignableFrom(instance.GetType()))
+            {
+                var executor = instance.GetType().GetMethod("ExecuteTaskTest");
+                executor.Invoke(instance, new[] { methodInfo });
+            }
+            else
 			if (ReturnTypeForAsyncTaskTest.IsAssignableFrom(methodInfo.ReturnType) && typeof(AsynchronousTaskTest).IsAssignableFrom(instance.GetType()))
 			{
 			    var executor = instance.GetType().GetMethod("ExecuteTest");

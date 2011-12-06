@@ -41,6 +41,17 @@
 
 			Assert.AreEqual(42, another.Result);
 		}
+
+        [TestMethod]
+        [Asynchronous]
+        public async Task AnotherWay()
+        {
+            await SomeTestTask.DoSomethingAsync();
+            int result = await SomeTestTask.DoSomethingAsync();
+            await Delay(100);
+
+            Assert.AreEqual(42, result);
+        }
 	}
 
 	public static class SomeTestTask
