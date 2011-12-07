@@ -14,14 +14,14 @@
 			return TaskEx.Delay(TimeSpan.FromMilliseconds(milliseconds));
 		}
 
-		public void ExecuteTest(MethodInfo test)
+		internal void ExecuteTest(MethodInfo test)
 		{
 			var tasks = (IEnumerable<Task>)test.Invoke(this, new object[] { });
 			IEnumerator<Task> enumerator = tasks.GetEnumerator();
 			ExecuteTestStep(enumerator);
 		}
 
-        public void ExecuteTaskTest(MethodInfo test)
+        internal void ExecuteTaskTest(MethodInfo test)
         {
             var task = (Task)test.Invoke(this, new object[] { });
             EnqueueConditional(() => task.IsCompleted || task.IsFaulted);
