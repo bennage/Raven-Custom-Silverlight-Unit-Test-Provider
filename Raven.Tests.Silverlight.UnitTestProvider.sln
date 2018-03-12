@@ -1,11 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raven.Tests.Silverlight.UnitTestProvider", "Raven.Tests.Silverlight.UnitTestProvider\Raven.Tests.Silverlight.UnitTestProvider.csproj", "{54415ADE-AFD4-40FB-9A5A-A3B7D8408E18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raven.Tests.Silverlight.UnitTestProvider.Example", "Raven.Tests.Silverlight.UnitTestProvider.Example\Raven.Tests.Silverlight.UnitTestProvider.Example.csproj", "{9CAE0666-147D-4B8D-92A1-39EBD685CD0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raven.Tests.Silverlight.UnitTestProvider.Example.Web", "Raven.Tests.Silverlight.UnitTestProvider.Example.Web\Raven.Tests.Silverlight.UnitTestProvider.Example.Web.csproj", "{D71F9B1C-6020-4D9D-946A-5DAB42BBA562}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{21AD52C9-38D4-4A92-84D3-6A909095C135}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
