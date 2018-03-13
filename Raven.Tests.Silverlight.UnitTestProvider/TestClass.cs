@@ -102,7 +102,15 @@ namespace Raven.Tests.Silverlight.UnitTestProvider
 			get { return methods[Methods.ClassCleanup] == null ? null : methods[Methods.ClassCleanup].GetMethodInfo(); }
 		}
 
-		public override string ToString()
+        public string Namespace
+        {
+            get
+            {
+                return type.Namespace;
+            }
+        }
+
+        public override string ToString()
 		{
 			return Name;
 		}

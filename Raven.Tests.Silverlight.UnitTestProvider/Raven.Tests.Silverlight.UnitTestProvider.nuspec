@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Raven.Tests.Silverlight.UnitTestProvider</id>
+        <version>$version$</version>
+        <authors>Rami Abughazaleh</authors>
+        <owners>Rami Abughazaleh</owners>
+        <projectUrl>https://github.com/bennage/Raven-Custom-Silverlight-Unit-Test-Provider</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A unit test provider for the Silverlight Unit Testing Framework that improves the syntax for asynchronous tests.</description>
+        <dependencies>
+            <dependency id="Microsoft.Bcl" version="1.1.10" />
+            <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+            <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\$configuration$\Raven.Tests.Silverlight.UnitTestProvider.dll" target="lib\sl5\" />
+        <file src="bin\$configuration$\Raven.Tests.Silverlight.UnitTestProvider.pdb" target="lib\sl5\" />
+    </files>
+</package>

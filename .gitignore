@@ -13,3 +13,5 @@ _ReSharper.*/
 VERSION
 *.nupkg
 ClientBin/
+packages
+.vs

@@ -1,0 +1,20 @@
+version: 1.0.{build}
+skip_tags: true
+configuration: Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+before_build:
+- cmd: nuget restore
+build:
+  project: Raven.Tests.Silverlight.UnitTestProvider.sln
+  verbosity: minimal
+after_build:
+- cmd: nuget pack .\Raven.Tests.Silverlight.UnitTestProvider\Raven.Tests.Silverlight.UnitTestProvider.nuspec -Prop version=%APPVEYOR_BUILD_VERSION% -Prop configuration=%CONFIGURATION%
+artifacts:
+- path: Raven.Tests.Silverlight.UnitTestProvider.*.nupkg
+  name: NuGet Package
